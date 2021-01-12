@@ -27,6 +27,12 @@ export class WishesService {
     return new_list.id;
   }
 
+  // Borrar lista.
+  deleteList(list:List) {
+    this.lists = this.lists.filter( listData => listData.id !== list.id );
+    this.saveStorage();
+  }
+
   // Obtener lista.
   getList(id: string | number) {
     id = Number(id);

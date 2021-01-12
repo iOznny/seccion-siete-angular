@@ -23,6 +23,7 @@ export class AddPage implements OnInit {
   ngOnInit() {
   }
 
+  // Añadir nuevo item a la lista.
   addItem() {
     // Verificamos que este el input con alguna información.
     if(this.nameItem.length === 0) {
@@ -37,6 +38,30 @@ export class AddPage implements OnInit {
     this.nameItem = '';
 
     // Guardamos los items nuevos en el Storage.
+    this.wishesService.saveStorage();
+  }
+
+  // Verificación de la lista y el cambio de estatus.
+  changeCheck(item: ListsItem) {
+    
+    // Se verifica si la lista esta terminada o no.
+    const slopes = this.list.items.filter( itemData => !itemData.completed).length;
+
+    if(slopes === 0) {
+      this.list.completedIn = new Date;
+      this.list.completed = true;
+    } else {
+      this.list.completedIn = null;
+      this.list.completed = false;
+    }
+    
+    // Salvamos los items con check de la lista en el Storage.
+    this.wishesService.saveStorage();
+  }
+
+  // Borrar item.
+  clear(i: number) {
+    this.list.items.splice(i, 1);
     this.wishesService.saveStorage();
   }
 
